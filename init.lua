@@ -293,12 +293,36 @@ require("lazy").setup({
 
 			local capabilities = require("blink.cmp").get_lsp_capabilities()
 
+			vim.lsp.config("lua_ls", {
+				settings = {
+					Lua = {
+						completion = {
+							callSnippet = "Replace",
+						},
+						diagnostics = {
+							globals = { "vim" },
+						},
+						workspace = {
+							library = vim.api.nvim_get_runtime_file("", true),
+							checkThirdParty = false,
+						},
+					},
+				},
+			})
+
 			local servers = {
 				lua_ls = {
 					settings = {
 						Lua = {
 							completion = {
 								callSnippet = "Replace",
+							},
+							diagnostics = {
+								globals = { "vim" },
+							},
+							workspace = {
+								library = vim.api.nvim_get_runtime_file("", true),
+								checkThirdParty = false,
 							},
 						},
 					},
