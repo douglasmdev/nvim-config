@@ -196,7 +196,17 @@ require("lazy").setup({
 			{ "mason-org/mason.nvim", opts = {} },
 			"mason-org/mason-lspconfig.nvim",
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
-			{ "j-hui/fidget.nvim", opts = {} },
+			{
+				"j-hui/fidget.nvim",
+				opts = {
+					notification = {
+						window = {
+							normal_hl = "Normal",
+							winblend = 0,
+						},
+					},
+				},
+			},
 			"saghen/blink.cmp",
 		},
 		config = function()
