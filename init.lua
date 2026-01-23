@@ -144,6 +144,45 @@ require("lazy").setup({
 		},
 		config = function()
 			require("telescope").setup({
+				defaults = {
+					vimgrep_arguments = {
+						"rg",
+						"--color=never",
+						"--no-heading",
+						"--with-filename",
+						"--line-number",
+						"--column",
+						"--smart-case",
+						"--hidden",
+						"--glob",
+						"!.git/*",
+					},
+					file_ignore_patterns = {
+						"%.git/",
+						"node_modules/",
+						"dist/",
+						"build/",
+						"%.cache/",
+						"__pycache__/",
+						"%.mypy_cache/",
+						"%.pytest_cache/",
+						"%.ruff_cache/",
+						"%.venv/",
+						"venv/",
+						"target/",
+						"%.next/",
+						"%.nuxt/",
+						"coverage/",
+					},
+				},
+				pickers = {
+					find_files = {
+						hidden = true,
+					},
+					git_files = {
+						show_untracked = true,
+					},
+				},
 				extensions = {
 					["ui-select"] = {
 						require("telescope.themes").get_dropdown(),
