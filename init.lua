@@ -376,6 +376,16 @@ require("lazy").setup({
 						},
 					},
 				},
+				ts_ls = {
+					filetypes = {
+						"javascript",
+						"javascriptreact",
+						"javascript.jsx",
+						"typescript",
+						"typescriptreact",
+						"typescript.tsx",
+					},
+				},
 			}
 			local ensure_installed = vim.tbl_keys(servers or {})
 			vim.list_extend(ensure_installed, {
@@ -425,6 +435,10 @@ require("lazy").setup({
 			end,
 			formatters_by_ft = {
 				lua = { "stylua" },
+				javascript = { "prettier", "eslint" },
+				javascriptreact = { "prettier", "eslint" },
+				typescript = { "prettier", "eslint" },
+				typescriptreact = { "prettier", "eslint" },
 			},
 		},
 	},
