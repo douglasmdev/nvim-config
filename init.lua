@@ -36,6 +36,9 @@ vim.o.scrolloff = 10
 
 vim.o.confirm = true
 
+vim.o.tabstop = 2
+vim.o.shiftwidth = 2
+
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
 vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
@@ -555,6 +558,7 @@ require("lazy").setup({
 	require("custom.plugins.autopairs"),
 	require("custom.plugins.neo-tree"),
 	require("custom.plugins.gitsigns"),
+	require("custom.plugins.yazi"),
 }, {
 	ui = {
 		icons = vim.g.have_nerd_font and {} or {
@@ -574,5 +578,7 @@ require("lazy").setup({
 		},
 	},
 })
+
+require("custom.plugins.floaty")
 
 -- vim: ts=2 sts=2 sw=2 et
