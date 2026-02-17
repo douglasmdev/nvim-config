@@ -33,7 +33,7 @@ vim.o.inccommand = "split"
 vim.o.cursorline = true
 vim.opt.guicursor = "a:block"
 
-vim.o.scrolloff = 10
+vim.o.scrolloff = 3
 
 vim.o.confirm = true
 

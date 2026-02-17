@@ -1,12 +1,18 @@
 return {
   {
     'nvim-treesitter/nvim-treesitter',
+    lazy = false,
     build = ':TSUpdate',
-    main = 'nvim-treesitter.config',
     opts = {
       ensure_installed = {
+        'ecma',
+        'jsx',
+        'typescript',
+        'tsx',
+        'javascript',
         'bash',
         'c',
+        'cpp',
         'diff',
         'html',
         'lua',
@@ -24,5 +30,12 @@ return {
       },
       indent = { enable = true, disable = { 'ruby' } },
     },
+    config = function(_, opts)
+      local ok, ts_config = pcall(require, 'nvim-treesitter.configs')
+      if not ok then
+        ts_config = require('nvim-treesitter.config')
+      end
+      ts_config.setup(opts)
+    end,
   },
 }

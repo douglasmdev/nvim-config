@@ -102,23 +102,16 @@ return {
 
       local capabilities = require('blink.cmp').get_lsp_capabilities()
 
-      vim.lsp.config('lua_ls', {
-        settings = {
-          Lua = {
-            completion = {
-              callSnippet = 'Replace',
-            },
-            diagnostics = {
-              globals = { 'vim' },
-            },
-            workspace = {
-              library = vim.api.nvim_get_runtime_file('', true),
-              checkThirdParty = false,
-            },
-          },
+      local ts_server_settings = {
+        filetypes = {
+          'javascript',
+          'javascriptreact',
+          'javascript.jsx',
+          'typescript',
+          'typescriptreact',
+          'typescript.tsx',
         },
-      })
-
+      }
       local servers = {
         lua_ls = {
           settings = {
@@ -136,25 +129,26 @@ return {
             },
           },
         },
-        ts_ls = {
-          filetypes = {
-            'javascript',
-            'javascriptreact',
-            'javascript.jsx',
-            'typescript',
-            'typescriptreact',
-            'typescript.tsx',
+        ts_ls = ts_server_settings,
+        clangd = {
+          cmd = {
+            'clangd',
+            '--background-index',
+            '--clang-tidy',
+            '--header-insertion=iwyu',
           },
         },
       }
-      local ensure_installed = vim.tbl_keys(servers or {})
-      vim.list_extend(ensure_installed, {
-        'stylua',
-      })
-      require('mason-tool-installer').setup { ensure_installed = ensure_installed }
+      local lsp_servers = vim.tbl_keys(servers or {})
+      require('mason-tool-installer').setup {
+        ensure_installed = {
+          'stylua',
+          'clang-format',
+        },
+      }
 
       require('mason-lspconfig').setup {
-        ensure_installed = {},
+        ensure_installed = lsp_servers,
         automatic_installation = false,
         handlers = {
           function(server_name)
