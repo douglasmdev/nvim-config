@@ -96,6 +96,7 @@ return {
         ensure_installed = {
           -- Update this to ensure that you have the debuggers for the langs you want
           'delve',
+          'codelldb',
         },
       }
 
@@ -136,6 +137,38 @@ return {
       dap.listeners.after.event_initialized['dapui_config'] = dapui.open
       dap.listeners.before.event_terminated['dapui_config'] = dapui.close
       dap.listeners.before.event_exited['dapui_config'] = dapui.close
+
+      local mason_path = vim.fn.stdpath 'data' .. '/mason/packages/codelldb/extension/'
+      local codelldb = mason_path .. 'adapter/codelldb'
+      local liblldb = mason_path .. 'lldb/lib/liblldb.so'
+      if vim.fn.has 'mac' == 1 then
+        liblldb = mason_path .. 'lldb/lib/liblldb.dylib'
+      elseif vim.fn.has 'win32' == 1 then
+        codelldb = mason_path .. 'adapter/codelldb.exe'
+        liblldb = mason_path .. 'lldb/bin/liblldb.dll'
+      end
+
+      dap.adapters.codelldb = {
+        type = 'server',
+        port = '${port}',
+        executable = {
+          command = codelldb,
+          args = { '--liblldb', liblldb, '--port', '${port}' },
+        },
+      }
+
+      dap.configurations.rust = {
+        {
+          name = 'Launch Rust binary',
+          type = 'codelldb',
+          request = 'launch',
+          program = function()
+            return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/target/debug/', 'file')
+          end,
+          cwd = '${workspaceFolder}',
+          stopOnEntry = false,
+        },
+      }
 
       -- Install golang specific config
       require('dap-go').setup {

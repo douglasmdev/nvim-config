@@ -130,6 +130,7 @@ return {
           },
         },
         ts_ls = ts_server_settings,
+        rust_analyzer = {},
         clangd = {
           cmd = {
             'clangd',
